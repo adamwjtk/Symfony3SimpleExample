@@ -3,14 +3,18 @@
 namespace UsersBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Command\LockableTrait;
+use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use UsersBundle\Controller\UserController;
 use Symfony\Component\Console\Helper\Table;
 
 class FakeUserListCommand extends ContainerAwareCommand
 {
+    use LockableTrait;
+
     /**
      * {@inheritdoc}
      */
@@ -19,7 +23,13 @@ class FakeUserListCommand extends ContainerAwareCommand
         $this
             ->setName('random-user')
             ->setDescription('Sample User JSON List Returned')
-            ->addArgument('f', InputArgument::OPTIONAL, 'return pretty table');
+            ->setDefinition(
+                new InputDefinition(
+                    [
+                        new InputOption('ftable', 'f', InputOption::VALUE_NONE, 'Display pretty table')
+                    ]
+                )
+            );
     }
 
     /**
@@ -27,15 +37,20 @@ class FakeUserListCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $table = $input->getArgument('f');
+        if (!$this->lock()) {
+            $output->writeln('command is running now!');
+            return 0;
+        }
 
+        $displayTableOpt = $input->getOptions();
         $fakeUserController = new UserController();
 
         $container = $this->getContainer();
         $fakeUserController->setContainer($container);
         $content = $fakeUserController->RandomUserListAction()->getContent();
+
         if (false === empty($content)) {
-            if ($table) {
+            if ($displayTableOpt["ftable"] && json_decode($content)) {
                 $table = new Table($output);
                 $table
                     ->setHeaders(array('First Name', 'Last Name', 'Address'));
@@ -47,12 +62,14 @@ class FakeUserListCommand extends ContainerAwareCommand
                 }
 
                 $table->render();
+            } elseif (false === json_decode($content)) {
+                $output->writeln('Table data problem! Try without --ftable option');
             } else {
-                $output->writeln($content); // display all users from request in JSON format
-                //$output->writeln(json_encode(json_decode($content)[0])); // display single/first user in JSON format
+                $output->writeln($content);
             }
         } else {
             $output->writeln('no content');
         }
+        return 0;
     }
 }

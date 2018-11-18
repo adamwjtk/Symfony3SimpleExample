@@ -12,7 +12,8 @@ class UserController extends Controller implements UserInterface
 {
 
     /**
-     * not work in symfony 4
+     * return fake users list
+     * Method doesn`t work in symfony 4
      * @Route("/api/v1/user/random/list/{amount}",methods={"GET"})
      * @param int $amount
      * @return JsonResponse
@@ -30,7 +31,8 @@ class UserController extends Controller implements UserInterface
     }
 
     /**
-     * symfony4 ok
+     * return fake users list
+     * works in symfony4
      * @Route("/api/v1/user/random/list2/{amount}",methods={"GET"})
      * @param int $amount
      * @return JsonResponse
@@ -48,6 +50,7 @@ class UserController extends Controller implements UserInterface
     }
 
     /**
+     * Dispaly fake users DataTable view
      * @Route("/user/table")
      * @return Response
      */
