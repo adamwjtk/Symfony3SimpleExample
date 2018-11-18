@@ -12,6 +12,7 @@ class FakeUsersListGenerate
     private $fakeUserArray;
 
     /**
+     * generated and returned fake users
      * @param int $amount
      * @return array
      */
