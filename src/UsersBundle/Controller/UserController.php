@@ -4,6 +4,7 @@ namespace UsersBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use UsersBundle\Service\Faker\FakeUsersListGenerate;
 
@@ -42,5 +43,17 @@ class UserController extends Controller implements UserInterface
         }
 
         return JsonResponse::create([], JsonResponse::HTTP_NOT_FOUND, []);
+    }
+
+    /**
+     * @Route("/user/table")
+     */
+    public function displayDataTableAction()
+    {
+        $data = $this->forward('UsersBundle:User:RandomUserList')->getContent();
+
+        $return =  $this->renderView('@Users/Tables/UserDataTable.html.twig', array('data' => json_decode($data, true),'title' => 'task 3'));
+
+        return new Response($return);
     }
 }
