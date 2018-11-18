@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+    {% block javascripts %}
+        {{ parent() }}
+        <script type="text/javascript" src="{{ asset('js/jquery.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+
+        <script type="text/javascript" language="javascript">
+        $(document).ready( function () {
+        $('#myTable').DataTable();
+        } );
+
+        </script>
+    {%  endblock %}
+
+        {% block stylesheets %}
+            <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.18/css/jquery.dataTables.min.css">
+        {% endblock %}
+    {% block body %}
+
+        <table id="myTable" class="display">
+            <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Street</th>
+                <th>Number</th>
+                <th>City</th>
+                <th>Postal code</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for items in data %}
+            <tr>
+            <th>{{ items.FirstName }}</th>
+            <th>{{ items.LastName }}</th>
+            <th>{{ items.Address.street }}</th>
+            <th>{{ items.Address.number }}</th>
+            <th>{{ items.Address.city }}</th>
+            <th>{{ items.Address.postalCode }}</th>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    {% endblock %}

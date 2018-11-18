@@ -1,0 +1,4 @@
+services:
+    user.fake.generate_random_list:
+        class: UsersBundle\Service\Faker\FakeUsersListGenerate
+        public: true
