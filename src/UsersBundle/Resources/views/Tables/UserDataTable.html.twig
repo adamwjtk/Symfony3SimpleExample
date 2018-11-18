@@ -10,15 +10,16 @@
         <script type="text/javascript" src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
 
         <script type="text/javascript" language="javascript">
-        $(document).ready( function () {
-        $('#myTable').DataTable();
-        } );
+            $(document).ready(function () {
+                $('#myTable').DataTable();
+            });
 
         </script>
-    {%  endblock %}
+    {% endblock %}
 
         {% block stylesheets %}
-            <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.18/css/jquery.dataTables.min.css">
+            <link rel="stylesheet" type="text/css"
+                  href="{{ asset('css/jquery.dataTables.min.css') }}">
         {% endblock %}
     {% block body %}
 
@@ -34,16 +35,18 @@
             </tr>
             </thead>
             <tbody>
-            {% for items in data %}
-            <tr>
-            <th>{{ items.FirstName }}</th>
-            <th>{{ items.LastName }}</th>
-            <th>{{ items.Address.street }}</th>
-            <th>{{ items.Address.number }}</th>
-            <th>{{ items.Address.city }}</th>
-            <th>{{ items.Address.postalCode }}</th>
-            </tr>
-            {% endfor %}
+            {% if data is defined %}
+                {% for items in data %}
+                    <tr>
+                        <th>{{ items.FirstName }}</th>
+                        <th>{{ items.LastName }}</th>
+                        <th>{{ items.Address.street }}</th>
+                        <th>{{ items.Address.number }}</th>
+                        <th>{{ items.Address.city }}</th>
+                        <th>{{ items.Address.postalCode }}</th>
+                    </tr>
+                {% endfor %}
+            {% endif %}
             </tbody>
         </table>
 

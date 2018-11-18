@@ -4,6 +4,7 @@ namespace UsersBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use UsersBundle\Service\Faker\FakeUsersListGenerate;
 
@@ -11,7 +12,8 @@ class UserController extends Controller implements UserInterface
 {
 
     /**
-     * @Route("/api/v1/user/random/list")
+     * not work in symfony 4
+     * @Route("/api/v1/user/random/list/{amount}",methods={"GET"})
      * @param int $amount
      * @return JsonResponse
      */
@@ -28,7 +30,8 @@ class UserController extends Controller implements UserInterface
     }
 
     /**
-     * @Route("/api/v1/user/random/list2")
+     * symfony4 ok
+     * @Route("/api/v1/user/random/list2/{amount}",methods={"GET"})
      * @param int $amount
      * @return JsonResponse
      */
@@ -42,5 +45,18 @@ class UserController extends Controller implements UserInterface
         }
 
         return JsonResponse::create([], JsonResponse::HTTP_NOT_FOUND, []);
+    }
+
+    /**
+     * @Route("/user/table")
+     * @return Response
+     */
+    public function displayDataTableAction(): Response
+    {
+        $data = $this->forward('UsersBundle:User:RandomUserList')->getContent();
+
+        $return = $this->renderView('@Users/Tables/UserDataTable.html.twig', array('data' => json_decode($data, true), 'title' => 'TASK 3'));
+
+        return new Response($return);
     }
 }
