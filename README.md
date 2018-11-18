@@ -6,7 +6,15 @@ Symfony3 With DataTable Simple Example
  ``` bash
 composer install
 ```
-2 - run
+2 - www run
 ``` yml
  {your.domain}/app_dev.php/user/table
  ```
+ 3- command run
+``` bash
+   php bin/console random-user
+```
+or with f parameter
+``` bash
+ php bin/console random-user f
+```
