@@ -48,7 +48,7 @@ class FakeUserListCommand extends ContainerAwareCommand
 
                 $table->render();
             } else {
-                $output->writeln($content); // display all user from request in JSON format
+                $output->writeln($content); // display all users from request in JSON format
                 //$output->writeln(json_encode(json_decode($content)[0])); // display single/first user in JSON format
             }
         } else {
