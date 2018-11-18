@@ -2,7 +2,11 @@
 Symfony3 With DataTable Simple Example
 
 
--- install
- composer install
- -- run
+1 - Install app
+ ``` bash
+composer install
+```
+2 - run
+``` yml
  {your.domain}/app_dev.php/user/table
+ ```
