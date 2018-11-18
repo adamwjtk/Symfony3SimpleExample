@@ -6,13 +6,21 @@ use Faker\Factory as Fake;
 
 class FakeUsersListGenerate
 {
+    /**
+     * @var array
+     */
     private $fakeUserArray;
 
-    public function generateList(int $amount = 9){
+    /**
+     * @param int $amount
+     * @return array
+     */
+    public function generateList(int $amount): array
+    {
         $this->fakeUserArray = [];
         $fakeUserFactory = Fake::create();
         $counter = 0;
-        while($amount > $counter){
+        while ($amount > $counter) {
             $this->fakeUserArray[$counter]['LastName'] = $fakeUserFactory->lastName;
             $this->fakeUserArray[$counter]['FirstName'] = $fakeUserFactory->firstName;
             $this->fakeUserArray[$counter]['Address']['street'] = $fakeUserFactory->streetName;
