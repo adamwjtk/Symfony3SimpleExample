@@ -1,0 +1,4 @@
+users:
+    resource: "@UsersBundle/Controller/"
+    type:     annotation
+    prefix:   /
