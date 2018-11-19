@@ -14,7 +14,7 @@ composer install
 ``` bash
    php bin/console random-user
 ```
-or with f parameter
+or with --ftable option
 ``` bash
- php bin/console random-user f
+ php bin/console random-user -f
 ```
